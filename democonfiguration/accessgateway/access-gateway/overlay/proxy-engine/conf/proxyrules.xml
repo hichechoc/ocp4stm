@@ -3,6 +3,6 @@
 <!DOCTYPE nete:proxyrules SYSTEM "file:////opt/CA/secure-proxy/proxy-engine/conf/dtd/proxyrules.dtd">
 
 <!-- Proxy Rules-->
-<nete:proxyrules xmlns:nete="http://www.broadcom.com/">
-     <nete:forward>http://www.broadcom.com$0</nete:forward>
+<nete:proxyrules xmlns:nete="http://www.ca.com/">
+     <nete:forward>http://www.ca.com$0</nete:forward>
 </nete:proxyrules>
