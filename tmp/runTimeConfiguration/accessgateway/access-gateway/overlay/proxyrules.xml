@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<?cocoon-process type="xslt"?>
-<!DOCTYPE nete:proxyrules SYSTEM "file:////opt/CA/secure-proxy/proxy-engine/conf/dtd/proxyrules.dtd">
-
-<!-- Proxy Rules-->
-<nete:proxyrules xmlns:nete="http://www.ca.com/">
-     <nete:forward>http://www.google.com$0</nete:forward>
-</nete:proxyrules>
