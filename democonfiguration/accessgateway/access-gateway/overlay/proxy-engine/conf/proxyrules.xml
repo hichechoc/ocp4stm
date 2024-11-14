@@ -4,10 +4,10 @@
 <!-- Proxy Rules-->
 <nete:proxyrules xmlns:nete="http://www.google.com/">
 	<nete:cond type="uri" criteria="beginswith">
-		<nete:case value="/protected">
+		<nete:case value="/protected/1">
 			<nete:forward>http://www.google.com$1</nete:forward>
 		</nete:case>
-		<nete:case value="/unprotected">
+		<nete:case value="/protected/2">
 			<nete:forward>http://www.ca.com$1</nete:forward>
 		</nete:case>
 	</nete:cond>
