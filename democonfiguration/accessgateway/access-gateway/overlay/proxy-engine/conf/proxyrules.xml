@@ -2,7 +2,7 @@
 <?cocoon-process type="xslt"?>
 <!DOCTYPE nete:proxyrules SYSTEM "file:////opt/CA/secure-proxy/proxy-engine/conf/dtd/proxyrules.dtd">
 <!-- Proxy Rules-->
-<nete:proxyrules xmlns:nete="http://www.google.com/">
+<nete:proxyrules xmlns:nete="http://www.ca.com/">
 	<nete:cond type="uri" criteria="equals">
 		<nete:case value="/protected">
 			<nete:forward>http://www.google.com$1</nete:forward>
