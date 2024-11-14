@@ -1,12 +1,8 @@
 <?xml version="1.0"?>
 <?cocoon-process type="xslt"?>
 <!DOCTYPE nete:proxyrules SYSTEM "file:////opt/CA/secure-proxy/proxy-engine/conf/dtd/proxyrules.dtd">
+
 <!-- Proxy Rules-->
-<nete:proxyrules">
-	<nete:cond type="uri" criteria="beginswith">
-		<nete:case value="/unprotected">
-			<nete:forward>http://www.google.com</nete:forward>
-		</nete:case>
-	</nete:cond>
-	<nete:forward>https://www.broadcom.com</nete:forward>
+<nete:proxyrules xmlns:nete="http://www.google.com/">
+     <nete:forward>http://www.google.com</nete:forward>
 </nete:proxyrules>
