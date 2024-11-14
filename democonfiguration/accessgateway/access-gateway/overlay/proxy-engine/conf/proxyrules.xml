@@ -4,7 +4,7 @@
 <!-- Proxy Rules-->
 <nete:proxyrules">
 	<nete:cond type="uri" criteria="beginswith">
-		<nete:case value="/protected">
+		<nete:case value="/unprotected">
 			<nete:forward>http://www.google.com</nete:forward>
 		</nete:case>
 	</nete:cond>
