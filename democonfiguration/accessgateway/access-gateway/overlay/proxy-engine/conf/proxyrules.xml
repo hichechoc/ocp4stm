@@ -8,7 +8,7 @@
 			<nete:forward>http://www.google.com$1</nete:forward>
 		</nete:case>
 		<nete:case value="/unprotected">
-			<nete:forward>http://www.ca.com$1</nete:forward>
+			<nete:redirect>http://www.ca.com$1</nete:redirect>
 		</nete:case>
 	</nete:cond>
 </nete:proxyrules>
