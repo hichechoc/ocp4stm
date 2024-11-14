@@ -7,7 +7,7 @@
 		<nete:case value="/protected">
 			<nete:forward>http://www.google.com</nete:forward>
 		</nete:case>
-		<nete:case value="/protected">
+		<nete:case value="/unprotected">
 			<nete:forward>http://www.ca.com
 			</nete:forward>
 		</nete:case>
