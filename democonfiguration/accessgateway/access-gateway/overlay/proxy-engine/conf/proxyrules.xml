@@ -1,17 +1,8 @@
-<!DOCTYPE nete:proxyrules SYSTEM "file:///$$PROXY_RULES_DTD$$">
+<?xml version="1.0"?>
+<?cocoon-process type="xslt"?>
+<!DOCTYPE nete:proxyrules SYSTEM "file:////opt/CA/secure-proxy/proxy-engine/conf/dtd/proxyrules.dtd">
 
-<!-- Proxy Rules -->
-<!-- replace www.example.com with your namespace -->
-<nete:proxyrules xmlns:nete="http://www.example.com/">
-   <nete:cond criteria="beginswith" type="uri">
-      <!-- replace /dir1 with an appropriate URI -->
-      <nete:case value="/protected">
-         <!-- replace http://server1.example.com with the appropriate destination server -->
-         <nete:redirect>http://www.ca.com</nete:redirect>
-      </nete:case>
-      <nete:default>
-         <!-- replace http://home.example.com with a default destination used for all requests that do not match the nete:case elements -->
-         <nete:redirect>http://www.google.com</nete:redirect>
-      </nete:default>
-   </nete:cond>
+<!-- Proxy Rules-->
+<nete:proxyrules xmlns:nete="http://www.ca.com/">
+     <nete:forward>http://www.google.com$0</nete:forward>
 </nete:proxyrules>
