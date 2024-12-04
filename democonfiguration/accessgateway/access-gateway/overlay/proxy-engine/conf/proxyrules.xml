@@ -4,5 +4,5 @@
 
 <!-- Proxy Rules-->
 <nete:proxyrules xmlns:nete="http://www.ca.com/">
-     <nete:forward>http://www.google.com$0</nete:forward>
+     <nete:forward>http://www.google.com$1</nete:forward>
 </nete:proxyrules>
