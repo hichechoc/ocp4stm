@@ -7,11 +7,11 @@
       <!-- replace /dir1 with an appropriate URI -->
       <nete:case value="/protected">
          <!-- replace http://server1.example.com with the appropriate destination server -->
-         <nete:redirect>http://www.ca.com$2</nete:redirect>
+         <nete:redirect>http://www.ca.com</nete:redirect>
       </nete:case>
       <nete:default>
          <!-- replace http://home.example.com with a default destination used for all requests that do not match the nete:case elements -->
-         <nete:redirect>http://www.google.com$2</nete:redirect>
+         <nete:redirect>http://www.google.com</nete:redirect>
       </nete:default>
    </nete:cond>
 </nete:proxyrules>
