@@ -1,5 +1,0 @@
-components: Server/Connection_Management, Server/Policy_Server_General, IsProtected, Login_Logout/Function_Begin_End, Login_Logout/Authentication, Login_Logout/Send_Response, Login_Logout/Receive_Request, IsAuthorized, Tunnel_Service
-, JavaAPI, ODBC/Sql_Statement_Begin_End, ODBC/Connection_Management, ODBC/Sql_Errors, ODBC/Connection_Monitor, LDAP/Ldap_Call_Begin_End, LDAP/Connection_Management, LDAP/Ldap_Error_Messages
-data: Date, PreciseTime, Time, Pid, Tid, SrcFile, Function, Tag, TransactionID, AgentName, Resource, User, Group, Realm, Domain, Directory, Policy, AgentType, Rule, ErrorValue, ReturnValue, ErrorString, IPAddr, IPPort, Result, Return
-s, CallDetail, Data, Message
-version: 1.1.0
