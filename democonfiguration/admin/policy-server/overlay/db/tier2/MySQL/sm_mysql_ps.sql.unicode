@@ -1,0 +1,946 @@
+
+DROP TABLE IF EXISTS smactiveexpr_variable5;
+
+CREATE TABLE smactiveexpr_variable5
+(
+    activeexproid           VARCHAR(64) NOT NULL,
+    domainoid               VARCHAR(64) NOT NULL,
+    variableoid             VARCHAR(64) NOT NULL,
+    PRIMARY KEY             (activeexproid, variableoid)
+);
+
+CREATE INDEX sm1smexpr_var ON smactiveexpr_variable5
+(
+    domainoid
+);
+
+DROP TABLE IF EXISTS smrule_variable5;
+
+CREATE TABLE smrule_variable5
+(
+    domainoid               VARCHAR(64)     NOT NULL,
+    realmoid                VARCHAR(64)     NOT NULL,
+    ruleoid                 VARCHAR(64)     NOT NULL,
+    variableoid             VARCHAR(64)     NOT NULL,
+    PRIMARY KEY             (ruleoid, variableoid)
+);
+
+CREATE INDEX sm1smrule_var ON smrule_variable5
+(
+    domainoid
+);
+
+CREATE INDEX sm2smrule_var ON smrule_variable5
+(
+    realmoid
+);
+
+DROP TABLE IF EXISTS smvariable_nestedvariable5;
+
+CREATE TABLE smvariable_nestedvariable5
+(
+    variableoid             VARCHAR(64)     NOT NULL,
+    domainoid               VARCHAR(64)     NOT NULL,
+    nestedvariableoid       VARCHAR(64)     NOT NULL,
+    PRIMARY KEY             (variableoid, nestedvariableoid, domainoid)
+);
+
+CREATE INDEX sm1smvar_var ON smvariable_nestedvariable5
+(
+    domainoid
+);
+
+DROP TABLE IF EXISTS smvariable5;
+
+CREATE TABLE smvariable5
+(
+    variableoid             VARCHAR(64)     NOT NULL,
+    domainoid               VARCHAR(64)     NOT NULL,
+    variablename            VARCHAR(255)    NOT NULL,
+    definition              VARCHAR(4000)   NOT NULL,
+    prefetchflag            INT         NOT NULL DEFAULT 0,
+    returntype              INT         NOT NULL DEFAULT 0,
+    metadata                VARCHAR(4000),
+    variabletype            VARCHAR(64),
+    variabledesc            VARCHAR(1024),
+    PRIMARY KEY             (variableoid)
+);
+
+CREATE INDEX sm1smvar ON smvariable5
+(
+    domainoid,
+    variabletype
+);
+
+DROP TABLE IF EXISTS smvariabletype5;
+
+CREATE TABLE smvariabletype5
+(
+    variabletypeoid         VARCHAR(64)     NOT NULL,
+    variabletypename        VARCHAR(255)    NOT NULL,
+    variabletypedesc        VARCHAR(255),
+    filter                  VARCHAR(1024),
+    PRIMARY KEY             (variabletypeoid),
+    UNIQUE                  (variabletypename)
+);
+
+DROP TABLE IF EXISTS smrootconfig5;
+
+CREATE TABLE smrootconfig5
+(
+    rootconfigoid           VARCHAR(64)     NOT NULL,
+    enableusertracking      INT         NOT NULL DEFAULT 0,
+    dynamicprefs            VARCHAR(1024),
+    majorversion            INT         NOT NULL DEFAULT 0,
+    minorversion            INT         NOT NULL DEFAULT 0,
+    smmode                  INT         NOT NULL DEFAULT 0,
+    PRIMARY KEY             (rootconfigoid)
+);
+
+DROP TABLE IF EXISTS smagenttypeattrvalues4;
+
+CREATE TABLE smagenttypeattrvalues4
+(
+    vendorattroid           VARCHAR(64)     NOT NULL,
+    value                   INT         NOT NULL DEFAULT 0,
+    stringvalue             VARCHAR(255)    NOT NULL,
+    vendoroid               VARCHAR(64),
+    PRIMARY KEY             (vendorattroid, value)
+);
+
+DROP TABLE IF EXISTS smagent_agentgroup4;
+
+CREATE TABLE smagent_agentgroup4
+(
+    devicegroupoid          VARCHAR(64)     NOT NULL,
+    deviceoid               VARCHAR(64)     NOT NULL,
+    PRIMARY KEY             (devicegroupoid, deviceoid)
+);
+
+DROP TABLE IF EXISTS smrule_rulegroup4;
+
+CREATE TABLE smrule_rulegroup4
+(
+    rulegroupoid            VARCHAR(64)     NOT NULL,
+    domainoid               VARCHAR(64)     NOT NULL,
+    ruleoid                 VARCHAR(64)     NOT NULL,
+    PRIMARY KEY             (rulegroupoid, ruleoid)
+);
+
+CREATE INDEX sm1smrule_group ON smrule_rulegroup4
+(
+    domainoid
+);
+
+DROP TABLE IF EXISTS smrules5;
+
+CREATE TABLE smrules5
+(
+    domainoid               VARCHAR(64)     NOT NULL,
+    ruleoid                 VARCHAR(64)     NOT NULL,
+    ruleaction              VARCHAR(255)    NOT NULL,
+    realmoid                VARCHAR(64)     NOT NULL,
+    activeexproid           VARCHAR(64),
+    ruledesc                VARCHAR(255),
+    rulename                VARCHAR(255)    NOT NULL,
+    vendoroid               VARCHAR(64)     NOT NULL,
+    ruleresource            VARCHAR(255),
+    timestring              VARCHAR(255)    NOT NULL,
+    allowaccess             INT         NOT NULL DEFAULT 0,
+    regularexpression       INT         NOT NULL DEFAULT 0,
+    isenabled               INT         NOT NULL DEFAULT 0,
+    PRIMARY KEY             (ruleoid),
+    UNIQUE                  (domainoid, realmoid, rulename)
+);
+
+CREATE INDEX sm1smrule ON smrules5
+(
+    domainoid
+);
+
+CREATE INDEX sm2smrule ON smrules5
+(
+    realmoid
+);
+
+CREATE INDEX sm3smrule ON smrules5
+(
+    activeexproid
+);
+
+DROP TABLE IF EXISTS smrealm5;
+
+CREATE TABLE smrealm5
+(
+    realmdesc               VARCHAR(255),
+    domainoid               VARCHAR(64)     NOT NULL,
+    realmname               VARCHAR(255)    NOT NULL,
+    selfregoid              VARCHAR(64)     NOT NULL,
+    resourceroot            VARCHAR(255),
+    vendoroid               VARCHAR(64)     NOT NULL,
+    schemeoid               VARCHAR(64)     NOT NULL,
+    realmoid                VARCHAR(64)     NOT NULL,
+    deviceoid               VARCHAR(64)     NOT NULL,
+    processauthevents       INT         NOT NULL DEFAULT 0,
+    processazevents         INT         NOT NULL DEFAULT 0,
+    protectall              INT         NOT NULL DEFAULT 0,
+    azuserdiroid            VARCHAR(64),
+    maxtimeout              INT         NOT NULL DEFAULT 0,
+    idletimeout             INT         NOT NULL DEFAULT 0,
+    parentrealmoid          VARCHAR(64)     NOT NULL,
+    syncaudit               INT         NOT NULL DEFAULT 0,
+    persistentsessiontype   INT         NOT NULL DEFAULT 0,
+    sessiondrift            INT         NOT NULL DEFAULT -1,
+    PRIMARY KEY             (realmoid),
+    UNIQUE                  (domainoid, realmname, parentrealmoid)
+);
+
+CREATE INDEX sm1smrealm ON smrealm5
+(
+    domainoid
+);
+
+DROP TABLE IF EXISTS smagent5;
+
+CREATE TABLE smagent5
+(
+    devicesdesc             VARCHAR(255),
+    devicename              VARCHAR(255)    NOT NULL,
+    deviceoid               VARCHAR(64)     NOT NULL,
+    vendoroid               VARCHAR(64)     NOT NULL,
+    realmhintattrid         INT         NOT NULL,
+    PRIMARY KEY             (deviceoid),
+    UNIQUE                  (devicename)
+);
+
+DROP TABLE IF EXISTS smagentgroup4;
+
+CREATE TABLE smagentgroup4
+(
+    devicegroupdesc         VARCHAR(255),
+    devicegroupname         VARCHAR(255)    NOT NULL,
+    devicegroupoid          VARCHAR(64)     NOT NULL,
+    vendoroid               VARCHAR(64)     NOT NULL,
+    PRIMARY KEY             (devicegroupoid),
+    UNIQUE                  (devicegroupname)
+);
+
+DROP TABLE IF EXISTS smrulegroup4;
+
+CREATE TABLE smrulegroup4
+(
+    rulegroupoid            VARCHAR(64)     NOT NULL,
+    domainoid               VARCHAR(64)     NOT NULL,
+    rulegroupname           VARCHAR(255)    NOT NULL,
+    rulegroupdesc           VARCHAR(255),
+    vendoroid               VARCHAR(64)     NOT NULL,
+    PRIMARY KEY             (rulegroupoid),
+    UNIQUE                  (domainoid, rulegroupname)
+);
+
+CREATE INDEX sm1smrulegroup ON smrulegroup4
+(
+    domainoid
+);
+
+DROP TABLE IF EXISTS smresponse_responseg4;
+
+CREATE TABLE smresponse_responseg4
+(
+    responsegroupoid        VARCHAR(64)     NOT NULL,
+    domainoid               VARCHAR(64)     NOT NULL,
+    responseoid             VARCHAR(64)     NOT NULL,
+    PRIMARY KEY             (responsegroupoid, responseoid)
+);
+
+CREATE INDEX sm1smresp_group ON smresponse_responseg4
+(
+    domainoid
+);
+
+DROP TABLE IF EXISTS smresponsegroup4;
+
+CREATE TABLE smresponsegroup4
+(
+    responsegroupoid        VARCHAR(64)     NOT NULL,
+    domainoid               VARCHAR(64)     NOT NULL,
+    responsegroupname       VARCHAR(255)    NOT NULL,
+    responsegroupdesc       VARCHAR(255),
+    vendoroid               VARCHAR(64)     NOT NULL,
+    PRIMARY KEY             (responsegroupoid),
+    UNIQUE                  (domainoid, responsegroupname)
+);
+
+CREATE INDEX sm1smrespgroup ON smresponsegroup4
+(
+    domainoid
+);
+
+DROP TABLE IF EXISTS smresponseattr5;
+
+CREATE TABLE smresponseattr5
+(
+    domainoid               VARCHAR(64)     NOT NULL,
+    responseattroid         VARCHAR(64)     NOT NULL,
+    responseoid             VARCHAR(64)     NOT NULL,
+    activeexproid           VARCHAR(64),
+    vendorattroid           VARCHAR(64),
+    ttl                     INT         NOT NULL DEFAULT 0,
+    flags                   INT         NOT NULL DEFAULT 0,
+    value                   VARCHAR(1024),
+    PRIMARY KEY             (responseattroid)
+);
+
+CREATE INDEX sm1smrespattr ON smresponseattr5
+(
+    domainoid
+);
+
+CREATE INDEX sm2smrespattr ON smresponseattr5
+(
+    responseoid
+);
+
+CREATE INDEX sm3smrespattr ON smresponseattr5
+(
+    activeexproid
+);
+
+DROP TABLE IF EXISTS smresponse4;
+
+CREATE TABLE smresponse4
+(
+    responseoid             VARCHAR(64)     NOT NULL,
+    domainoid               VARCHAR(64)     NOT NULL,
+    vendoroid               VARCHAR(64)     NOT NULL,
+    responsedesc            VARCHAR(255),
+    responsename            VARCHAR(255)    NOT NULL,
+    accessaccept            INT         NOT NULL DEFAULT 0,
+    accessreject            INT         NOT NULL DEFAULT 0,
+    accesschallenge         INT         NOT NULL DEFAULT 0,
+    PRIMARY KEY             (responseoid),
+    UNIQUE                  (domainoid, responsename)
+);
+
+CREATE INDEX sm1smresponse ON smresponse4
+(
+    domainoid
+);
+
+DROP TABLE IF EXISTS smagenttypeattribute4;
+
+CREATE TABLE smagenttypeattribute4
+(
+    vendorattroid           VARCHAR(64)     NOT NULL,
+    vendoroid               VARCHAR(64)     NOT NULL,
+    attributename           VARCHAR(255)    NOT NULL,
+    accessrequest           INT         NOT NULL DEFAULT 0,
+    accessaccept            INT         NOT NULL DEFAULT 0,
+    accessreject            INT         NOT NULL DEFAULT 0,
+    accesschallenge         INT         NOT NULL DEFAULT 0,
+    accountingrequest       INT         NOT NULL DEFAULT 0,
+    accountingresponse      INT         NOT NULL DEFAULT 0,
+    attributetype           INT         NOT NULL DEFAULT 0,
+    id                      INT         NOT NULL DEFAULT 0,
+    radiustype              INT         NOT NULL DEFAULT 0,
+    attributedesc           VARCHAR(255),
+    PRIMARY KEY             (vendorattroid),
+    UNIQUE                  (vendoroid, attributename)
+);
+
+CREATE INDEX sm1smagentattr ON smagenttypeattribute4
+(
+    vendoroid
+);
+
+DROP TABLE IF EXISTS smagenttypeactions4;
+
+CREATE TABLE smagenttypeactions4
+(
+    action                  VARCHAR(255)    NOT NULL,
+    vendoroid               VARCHAR(64)     NOT NULL,
+    PRIMARY KEY             (vendoroid, action)
+);
+
+DROP TABLE IF EXISTS smagenttype4;
+
+CREATE TABLE smagenttype4
+(
+    vendoroid               VARCHAR(64)     NOT NULL,
+    rfcid                   INT         NOT NULL DEFAULT 0,
+    vendordesc              VARCHAR(255)    DEFAULT NULL,
+    vendorname              VARCHAR(255)    NOT NULL,
+    vendortype              INT         NOT NULL DEFAULT 0,
+    resourcetype            INT         NOT NULL DEFAULT 0,
+    vendorspecificbytes     INT         NOT NULL DEFAULT 0,
+    PRIMARY KEY             (vendoroid),
+    UNIQUE                  (vendorname)
+);
+
+CREATE INDEX sm1smagenttype ON smagenttype4
+(
+    rfcid
+);
+
+CREATE INDEX sm2smagenttype ON smagenttype4
+(
+    vendortype
+);
+
+CREATE INDEX sm3smagenttype ON smagenttype4
+(
+    resourcetype
+);
+
+DROP TABLE IF EXISTS smuserpolicy4;
+
+CREATE TABLE smuserpolicy4
+(
+    domainoid               VARCHAR(64)     NOT NULL,
+    userpolicyoid           VARCHAR(64)     NOT NULL,
+    policyoid               VARCHAR(64)     NOT NULL,
+    userdirectoryoid        VARCHAR(64)     NOT NULL,
+    filterpath              VARCHAR(750)    NOT NULL,
+    filterclass             VARCHAR(512)    NOT NULL,
+    policyflags             INT         NOT NULL DEFAULT 0,
+    policyresolution        INT         NOT NULL DEFAULT 0,
+    PRIMARY KEY             (userpolicyoid)
+);
+
+CREATE INDEX sm1smuserpolicy ON smuserpolicy4
+(
+    domainoid
+);
+
+CREATE INDEX sm2smuserpolicy ON smuserpolicy4
+(
+    policyoid
+);
+
+DROP TABLE IF EXISTS smpolicylink4;
+
+CREATE TABLE smpolicylink4
+(
+    domainoid               VARCHAR(64)     NOT NULL,
+    policyoid               VARCHAR(64)     NOT NULL,
+    policylinkoid           VARCHAR(64)     NOT NULL,
+    ruleoid                 VARCHAR(64)     NOT NULL,
+    responseoid             VARCHAR(64),
+    PRIMARY KEY             (policylinkoid)
+);
+
+CREATE INDEX sm1smpolicylink ON smpolicylink4
+(
+    domainoid
+);
+
+CREATE INDEX sm2smpolicylink ON smpolicylink4
+(
+    policyoid
+);
+
+DROP TABLE IF EXISTS smpolicy5;
+
+CREATE TABLE smpolicy5
+(
+    policyoid               VARCHAR(64)     NOT NULL,
+    domainoid               VARCHAR(64)     NOT NULL,
+    activeexpr              VARCHAR(64),
+    policyname              VARCHAR(255)    NOT NULL,
+    policydesc              VARCHAR(255),
+    timestring              VARCHAR(255)    NOT NULL,
+    allowaccess             INT         DEFAULT 0,
+    isenabled               INT         DEFAULT 0,
+    ipaddress               VARCHAR(255),
+    usractiveexpr           VARCHAR(64),
+    PRIMARY KEY             (policyoid),
+    UNIQUE                  (domainoid, policyname)
+);
+
+CREATE INDEX sm1smpolicy ON smpolicy5
+(
+    domainoid
+);
+
+CREATE INDEX sm2smpolicy ON smpolicy5
+(
+    activeexpr
+);
+
+DROP TABLE IF EXISTS smactiveexpr5;
+
+CREATE TABLE smactiveexpr5
+(
+    activeexproid           VARCHAR(64)     NOT NULL,
+    domainoid               VARCHAR(64)     NOT NULL,
+    usesvariables           INT         NOT NULL DEFAULT 0,
+    expr                    VARCHAR(4000),
+    PRIMARY KEY             (activeexproid)
+);
+
+CREATE INDEX sm1smactiveexpr ON smactiveexpr5
+(
+    domainoid
+);
+
+DROP TABLE IF EXISTS smdomain_admin4;
+
+CREATE TABLE smdomain_admin4
+(
+    domainoid               VARCHAR(64)     NOT NULL,
+    adminoid                VARCHAR(64)     NOT NULL,
+    PRIMARY KEY             (domainoid, adminoid)
+);
+
+DROP TABLE IF EXISTS smdomain_imsenv5;
+
+CREATE TABLE smdomain_imsenv5
+(
+    domainoid               VARCHAR(64)     NOT NULL,
+    imsenv_oid              VARCHAR(64)     NOT NULL,
+    PRIMARY KEY             (domainoid, imsenv_oid)
+);
+
+DROP TABLE IF EXISTS smdomain_userdirect4;
+
+CREATE TABLE smdomain_userdirect4
+(
+    domainoid               VARCHAR(64)     NOT NULL,
+    userdirectoryoid        VARCHAR(64)     NOT NULL,
+    seqnumber               INT         NOT NULL DEFAULT 0,
+    PRIMARY KEY             (domainoid, userdirectoryoid, seqnumber)
+);
+
+DROP TABLE IF EXISTS smdomain5;
+
+CREATE TABLE smdomain5
+(
+    domainoid               VARCHAR(64)     NOT NULL,
+    domainname              VARCHAR(255)    NOT NULL,
+    domaindesc              VARCHAR(255),
+    isaffiliate             INT         DEFAULT 0,
+    domainmode              INT         DEFAULT 0,
+    PRIMARY KEY             (domainoid),
+    UNIQUE                  (domainname)
+);
+
+DROP TABLE IF EXISTS smadmin4;
+
+CREATE TABLE smadmin4
+(
+    adminoid                VARCHAR(64)     NOT NULL,
+    adminname               VARCHAR(255)    NOT NULL,
+    admindesc               VARCHAR(255),
+    password                VARCHAR(255),
+    userdirectoryoid        VARCHAR(64)     NOT NULL,
+    schemeoid               VARCHAR(64)     NOT NULL,
+    dirauth                 INT         NOT NULL DEFAULT 0,
+    rights                  INT         NOT NULL DEFAULT 0,
+    PRIMARY KEY             (adminoid),
+    UNIQUE                  (adminname)
+);
+
+DROP TABLE IF EXISTS smpasswordpolicy5;
+
+CREATE TABLE smpasswordpolicy5
+(
+    passwordpolicyoid       VARCHAR(64)     NOT NULL,
+    userdirectoryoid        VARCHAR(64)     NOT NULL,
+    passwordpolicyname      VARCHAR(255)    NOT NULL,
+    passwordpolicydesc      VARCHAR(255),
+    isactive                INT         NOT NULL DEFAULT 0,
+    isglobal                INT         NOT NULL DEFAULT 0,
+    filterpath              VARCHAR(255)    NOT NULL,
+    filterclass             VARCHAR(255)    NOT NULL,
+    policyresolution        INT         NOT NULL DEFAULT 0,
+    loginmaxfailures        INT         DEFAULT 0,
+    loginmaxinactivity      INT         DEFAULT 0,
+    pwdchangegracelogins    INT         DEFAULT 0,
+    logindayswarning        INT         DEFAULT 0,
+    dictionarytype          INT         DEFAULT 0,
+    dictionaryname          VARCHAR(255),
+    dictionarypartial       INT         DEFAULT 0,
+    pwdchangeperiod         INT         DEFAULT 0,
+    reenablement            INT         DEFAULT 0,
+    passwordbehavior        INT         DEFAULT 0,
+    expiredredirect         VARCHAR(1024),
+    immediateredirect       VARCHAR(1024),
+    inactiveredirect        VARCHAR(1024),
+    warningredirect         VARCHAR(1024),
+    pwmaxlength             INT         DEFAULT 0,
+    pwminlength             INT         DEFAULT 0,
+    pwmaxrepeatingchar      INT         DEFAULT 0,
+    pwminalphanum           INT         DEFAULT 0,
+    pwminalpha              INT         DEFAULT 0,
+    pwminnonalpha           INT         DEFAULT 0,
+    pwminnonprintable       INT         DEFAULT 0,
+    pwminnumbers            INT         DEFAULT 0,
+    pwminpunctuation        INT         DEFAULT 0,
+    pwreusecount            INT         DEFAULT 0,
+    pwreusedelay            INT         DEFAULT 0,
+    pwpercentdifferent      INT         DEFAULT 0,
+    pwpercentsequence       INT         DEFAULT 0,
+    pwspecialslength        INT         DEFAULT 0,
+    maxfailuresredirect     VARCHAR(1024),
+    priority                INT         DEFAULT 0,
+    pwdchangedaysgrace      INT         DEFAULT 0,
+    pwminloweralpha         INT         DEFAULT 0,
+    pwminupperalpha         INT         DEFAULT 0,
+    passwordchecklib        VARCHAR(1024),
+    PRIMARY KEY             (passwordpolicyoid),
+    UNIQUE                  (passwordpolicyname)
+);
+
+CREATE INDEX sm1smpwdpolicy ON smpasswordpolicy5
+(
+    userdirectoryoid
+);
+
+DROP TABLE IF EXISTS smtaggedstring5;
+
+CREATE TABLE smtaggedstring5
+(
+    taggedstringoid         VARCHAR(64)     NOT NULL,
+    passwordpolicyoid       VARCHAR(64)     NOT NULL,
+    taggedstringname        VARCHAR(255)    NOT NULL,
+    taggedvalue             VARCHAR(1024),
+    nomatch                 INT DEFAULT 0,
+    PRIMARY KEY             (taggedstringoid)
+);
+
+CREATE INDEX sm1smtagged ON smtaggedstring5
+(
+    passwordpolicyoid
+);
+
+CREATE INDEX sm2smtagged ON smtaggedstring5
+(
+    nomatch
+);
+
+DROP TABLE IF EXISTS smcertmap4;
+
+CREATE TABLE smcertmap4
+(
+    certmapoid              VARCHAR(64)     NOT NULL,
+    userdirectoryoid        VARCHAR(64)     NOT NULL,
+    certmapname             VARCHAR(255)    NOT NULL,
+    certmapdesc             VARCHAR(255),
+    issuerdn                VARCHAR(255),
+    ldapcadn                VARCHAR(255),
+    maptoldap               VARCHAR(255),
+    dirtype                 INT         NOT NULL DEFAULT 0,
+    flags                   INT         NOT NULL DEFAULT 0,
+    PRIMARY KEY             (certmapoid),
+    UNIQUE                  (certmapname)
+);
+
+DROP TABLE IF EXISTS smselfreg4;
+
+CREATE TABLE smselfreg4
+(
+    selfregoid              VARCHAR(64)     NOT NULL,
+    userdirectoryoid        VARCHAR(64)     NOT NULL,
+    selfregname             VARCHAR(255)    NOT NULL,
+    selfregdesc             VARCHAR(255),
+    registrationurl         VARCHAR(1024),
+    templatepath            VARCHAR(1024),
+    enablelogging           INT         NOT NULL DEFAULT 0,
+    welcomepathprovider     VARCHAR(255),
+    PRIMARY KEY             (selfregoid),
+    UNIQUE                  (selfregname)
+);
+
+DROP TABLE IF EXISTS smuserdirectory5;
+
+CREATE TABLE smuserdirectory5
+(
+    userdirectorydesc       VARCHAR(255),
+    userdirectoryname       VARCHAR(255)    NOT NULL,
+    odbcqueryoid            VARCHAR(64)     NOT NULL,
+    password                VARCHAR(255),
+    username                VARCHAR(255),
+    userdirectoryoid        VARCHAR(64)     NOT NULL,
+    namespace               VARCHAR(64)     NOT NULL,
+    server                  VARCHAR(512)    NOT NULL,
+    searchroot              VARCHAR(255),
+    userlookupstart         VARCHAR(255),
+    userlookupend           VARCHAR(255),
+    searchtimeout           INT         NOT NULL DEFAULT 0,
+    searchresults           INT         NOT NULL DEFAULT 0,
+    searchscope             INT         NOT NULL DEFAULT 0,
+    secureconnection        INT         NOT NULL DEFAULT 0,
+    requirecredentials      INT         NOT NULL DEFAULT 0,
+    disabledattr            VARCHAR(255),
+    universalidattr         VARCHAR(255),
+    guidattr                VARCHAR(255),
+    blobattr                VARCHAR(255),
+    maxreferrals            INT         DEFAULT 0,
+    challengerespattr       VARCHAR(255),
+    passwordattribute       VARCHAR(255),
+    emailaddrattr           VARCHAR(255),
+    enablesecuritycontext   INT         NOT NULL DEFAULT 0,
+    PRIMARY KEY             (userdirectoryoid),
+    UNIQUE                  (userdirectoryname)
+);
+
+CREATE INDEX sm1smuserdir ON smuserdirectory5
+(
+    odbcqueryoid
+);
+
+CREATE INDEX sm2smuserdir ON smuserdirectory5
+(
+    namespace
+);
+
+DROP TABLE IF EXISTS smscheme4;
+
+CREATE TABLE smscheme4
+(
+    schemeoid               VARCHAR(64)     NOT NULL,
+    schemename              VARCHAR(255)    NOT NULL,
+    schemelevel             INT         NOT NULL DEFAULT 0,
+    schemedesc              VARCHAR(255)    DEFAULT NULL,
+    schemelib               VARCHAR(1024),
+    sharedsecret            VARCHAR(255)    DEFAULT NULL,
+    schemeparam             VARCHAR(1024),
+    istemplate              INT         NOT NULL DEFAULT 0,
+    isusedbyadmin           INT         NOT NULL DEFAULT 0,
+    schemetype              INT         NOT NULL DEFAULT 0,
+    allowsavecreds          INT         NOT NULL DEFAULT 0,
+    isradius                INT         NOT NULL DEFAULT 0,
+    savecredsdays           INT         DEFAULT 0,
+    ignorepwcheck           INT         NOT NULL DEFAULT 0,
+    PRIMARY KEY             (schemeoid),
+    UNIQUE                  (schemename)
+);
+
+CREATE INDEX sm1smscheme ON smscheme4
+(
+    istemplate
+);
+
+CREATE INDEX sm2smscheme ON smscheme4
+(
+    isusedbyadmin
+);
+
+CREATE INDEX sm3smscheme ON smscheme4
+(
+    schemetype
+);
+
+CREATE INDEX sm4smscheme ON smscheme4
+(
+    isradius
+);
+
+DROP TABLE IF EXISTS version;
+
+CREATE TABLE version
+(
+    major                   INT         NOT NULL DEFAULT 0,
+    minor                   INT         NOT NULL DEFAULT 0,
+    langid                  INT         NOT NULL DEFAULT 0,
+    sublangid               INT         NOT NULL DEFAULT 0,
+    sortid                  INT         NOT NULL DEFAULT 0
+);
+
+DROP TABLE IF EXISTS smagentcommand4;
+
+CREATE TABLE smagentcommand4
+(
+    smagentcommandoid       VARCHAR(64)     NOT NULL,
+    smtimestamp             INT         NOT NULL DEFAULT 0,
+    smcommand               INT         NOT NULL DEFAULT 0,
+    smdata                  VARCHAR(1024),
+    PRIMARY KEY             (smagentcommandoid)
+);
+
+CREATE INDEX sm1smagentcmd ON smagentcommand4
+(
+    smtimestamp
+);
+
+DROP TABLE IF EXISTS smservercommand4;
+
+CREATE TABLE smservercommand4
+(
+    smservercommandoid      VARCHAR(64)     NOT NULL,
+    smtimestamp             INT         NOT NULL DEFAULT 0,
+    smcommand               INT         NOT NULL DEFAULT 0,
+    smdata                  VARCHAR(1024),
+    PRIMARY KEY             (smservercommandoid)
+);
+
+CREATE INDEX sm1smservercmd ON smservercommand4
+(
+    smtimestamp
+);
+
+DROP TABLE IF EXISTS smauthazmap4;
+
+CREATE TABLE smauthazmap4
+(
+    authazmapoid            VARCHAR(64)     NOT NULL,
+    authdiroid              VARCHAR(64)     NOT NULL,
+    azdiroid                VARCHAR(64)     NOT NULL,
+    authdirattrname         VARCHAR(255),
+    azdirattrname           VARCHAR(255),
+    authazmaptype           INT         NOT NULL DEFAULT 0,
+    PRIMARY KEY             (authazmapoid)
+);
+
+CREATE INDEX sm1smauthazmap ON smauthazmap4
+(
+    authdiroid
+);
+
+CREATE INDEX sm2smauthazmap ON smauthazmap4
+(
+    azdiroid
+);
+
+DROP TABLE IF EXISTS smkeymanagement4;
+
+CREATE TABLE smkeymanagement4
+(
+    keymanagementoid        VARCHAR(255)    NOT NULL,
+    isenabled               INT         NOT NULL DEFAULT 0,
+    changefrequency         INT         NOT NULL DEFAULT 0,
+    changevalue             INT         NOT NULL DEFAULT 0,
+    newkeysettime           INT         NOT NULL DEFAULT 0,
+    oldkeysettime           INT         NOT NULL DEFAULT 0,
+    firehour                INT         NOT NULL DEFAULT 0,
+    persistentkey           VARCHAR(255),
+    PRIMARY KEY             (keymanagementoid)
+);
+
+DROP TABLE IF EXISTS smagentkey4;
+
+CREATE TABLE smagentkey4
+(
+    agentkeyoid             VARCHAR(64)     NOT NULL,
+    keymarker               INT         DEFAULT 0,
+    enckey                  VARCHAR(255),
+    PRIMARY KEY             (agentkeyoid)
+);
+
+DROP TABLE IF EXISTS smodbcquery4;
+
+CREATE TABLE smodbcquery4
+(
+    odbcqueryoid            VARCHAR(64)     NOT NULL,
+    odbcqueryname           VARCHAR(255)    NOT NULL,
+    odbcquerydesc           VARCHAR(255),
+    queryenumerate          VARCHAR(1300),
+    querygetobjinfo         VARCHAR(1300),
+    querylookup             VARCHAR(1300),
+    queryinituser           VARCHAR(1300),
+    queryauthenticateuser   VARCHAR(1300),
+    querygetuserprop        VARCHAR(1300),
+    querysetuserprop        VARCHAR(1300),
+    querygetuserprops       VARCHAR(1300),
+    querylookupuser         VARCHAR(1300),
+    querygetgroups          TEXT(1300),
+    queryisgroupmember      TEXT(1300),
+    querygetgroupprop       TEXT(1300),
+    querysetgroupprop       VARCHAR(1300),
+    querygetgroupprops      TEXT(1300),
+    querylookupgroup        TEXT(1300),
+    querysetpassword        VARCHAR(1300),
+    PRIMARY KEY             (odbcqueryoid),
+    UNIQUE                  (odbcqueryname)
+);
+
+DROP TABLE IF EXISTS smpropertycollection5;
+
+CREATE TABLE smpropertycollection5
+(
+    propertycollectionoid   VARCHAR(64)     NOT NULL,
+    propertycollectionname  VARCHAR(255)    NOT NULL,
+    propertycollectiondesc  VARCHAR(255),
+    PRIMARY KEY             (propertycollectionoid),
+    UNIQUE                  (propertycollectionname)
+);
+
+DROP TABLE IF EXISTS smpropertysection5;
+
+CREATE TABLE smpropertysection5
+(
+    propertysectionoid      VARCHAR(64)     NOT NULL,
+    propertycollectionoid   VARCHAR(64)     NOT NULL,
+    propertysectionname     VARCHAR(255)    NOT NULL,
+    propertysectiondesc     VARCHAR(255),
+    PRIMARY KEY             (propertysectionoid),
+    UNIQUE                  (propertycollectionoid, propertysectionoid)
+);
+
+CREATE INDEX sm1smpropsection ON smpropertysection5
+(
+    propertycollectionoid
+);
+
+DROP TABLE IF EXISTS smproperty5;
+
+CREATE TABLE smproperty5
+(
+    propertyoid             VARCHAR(64)     NOT NULL,
+    propertysectionoid      VARCHAR(64)     NOT NULL,
+    propertyname            VARCHAR(255)    NOT NULL,
+    propertyvalue           VARCHAR(4000),
+    propertyflags           INT         DEFAULT 0,
+    PRIMARY KEY             (propertyoid),
+    UNIQUE                  (propertysectionoid, propertyoid)
+);
+
+CREATE INDEX sm1smprop ON smproperty5
+(
+    propertysectionoid
+);
+
+DROP TABLE IF EXISTS smtrustedhost5;
+
+CREATE TABLE smtrustedhost5
+(
+    hostdesc                VARCHAR(255),
+    ipaddr                  VARCHAR(25),
+    hostname                VARCHAR(255)    NOT NULL,
+    secret                  VARCHAR(255),
+    hostoid                 VARCHAR(64)     NOT NULL,
+    is4xhost                INT         DEFAULT 0,
+    rolloverenabled         INT         DEFAULT 0,
+    secretgentime           INT         DEFAULT 0,
+    secretusedtime          INT         DEFAULT 0,
+    prevsecret              VARCHAR(255),
+    PRIMARY KEY             (hostoid),
+    UNIQUE                  (hostname)
+);
+
+CREATE INDEX sm1smhost ON smtrustedhost5
+(
+    ipaddr
+);
+
+DROP TABLE IF EXISTS smsharedsecretpolicy6;
+
+CREATE TABLE smsharedsecretpolicy6
+(
+    secretpolicyoid         VARCHAR(255)    NOT NULL,
+    isenabled               INT         NOT NULL DEFAULT 0,
+    rolloverperiod          INT         NOT NULL DEFAULT 0,
+    rolloverfrequency       INT         NOT NULL DEFAULT 0,
+    PRIMARY KEY             (secretpolicyoid)
+);
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `databaseName`.`getdate` $$
+CREATE FUNCTION `databaseName`.`getdate` () RETURNS DATE
+DETERMINISTIC
+BEGIN
+  RETURN CURRENT_DATE;
+END $$
+
+DELIMITER ;
